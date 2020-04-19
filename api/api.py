@@ -3,6 +3,7 @@ import time
 
 # import ujson
 from flask import Flask
+from flask import request
 
 from api.db import initialize_map_data
 
@@ -35,6 +36,8 @@ def get_current_time():
 
 @app.route('/map-data')
 def get_map_data():
-    print(SOURCE_DATA[0].keys())
-    response = {'map_data': MAP_DATA['2014']['CORN']}
-    return {'map_data': response}
+    year = request.args.get('year')
+    crop = request.args.get('crop')
+    print(f"Request: {year}, {crop}")
+    response = {'map_data': MAP_DATA[year][crop]}
+    return response
